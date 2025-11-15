@@ -1,0 +1,184 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Luxury Gift Store",
+    "theme_version": "1.0.0",
+    "theme_author": "Custom Built",
+    "theme_documentation_url": "",
+    "theme_support_url": ""
+  },
+  {
+    "name": "Logo & Branding",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo image"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "min": 50,
+        "max": 300,
+        "step": 10,
+        "default": 150,
+        "unit": "px",
+        "label": "Logo width"
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon",
+        "info": "Will be scaled to 32x32px"
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_cream",
+        "default": "#F5F3EE",
+        "label": "Background Cream"
+      },
+      {
+        "type": "color",
+        "id": "color_maroon",
+        "default": "#8B1538",
+        "label": "Primary Maroon"
+      },
+      {
+        "type": "color",
+        "id": "color_rose",
+        "default": "#D4A5A5",
+        "label": "Accent Rose"
+      },
+      {
+        "type": "color",
+        "id": "color_charcoal",
+        "default": "#2C2C2C",
+        "label": "Text Charcoal"
+      },
+      {
+        "type": "color",
+        "id": "color_gold",
+        "default": "#C9A961",
+        "label": "Accent Gold"
+      }
+    ]
+  },
+  {
+    "name": "Gift Options",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_gift_wrap",
+        "label": "Enable gift wrapping",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "gift_wrap_price",
+        "label": "Gift wrap price",
+        "default": "5.00",
+        "info": "Enter price without currency symbol"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_gift_message",
+        "label": "Enable gift messages",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Product Page",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_quick_view",
+        "label": "Enable quick view",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_product_recommendations",
+        "label": "Show product recommendations",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_reviews",
+        "label": "Enable customer reviews",
+        "default": true,
+        "info": "Requires app installation"
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "options": [
+          {
+            "value": "drawer",
+            "label": "Slide-out drawer"
+          },
+          {
+            "value": "page",
+            "label": "Cart page"
+          }
+        ],
+        "default": "drawer",
+        "label": "Cart style"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_quick_buy",
+        "label": "Enable quick buy button",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Social Media",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram URL"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook URL"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest_link",
+        "label": "Pinterest URL"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_instagram_feed",
+        "label": "Show Instagram feed",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Currency",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_multi_currency",
+        "label": "Enable multi-currency",
+        "default": false,
+        "info": "Requires Shopify Payments"
+      }
+    ]
+  }
+]

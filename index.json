@@ -1,0 +1,52 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "height": 700,
+        "eyebrow": "Luxury Gifts",
+        "heading": "Gifts That Tell Your Story",
+        "subheading": "Handcrafted with love for life's most meaningful moments",
+        "button_label_1": "Shop Now",
+        "button_link_1": "/collections/all",
+        "button_label_2": "Our Story",
+        "button_link_2": "/pages/about"
+      }
+    },
+    "featured_collection_1": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Bestsellers",
+        "title": "Customer Favorites",
+        "description": "Our most loved gifts, chosen by people like you",
+        "products_to_show": 8,
+        "button_label": "View All"
+      }
+    },
+    "image_banner": {
+      "type": "image-with-text",
+      "settings": {
+        "heading": "Personalize Your Gift",
+        "text": "Add a personal touch with custom messages, photos, and unique designs that make every gift truly special.",
+        "button_label": "Learn More",
+        "button_link": "/pages/customization"
+      }
+    },
+    "featured_collection_2": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "New Arrivals",
+        "title": "Just Added",
+        "description": "Fresh finds to celebrate every occasion",
+        "products_to_show": 4,
+        "button_label": "See All New"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "featured_collection_1",
+    "image_banner",
+    "featured_collection_2"
+  ]
+}

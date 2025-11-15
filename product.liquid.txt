@@ -1,0 +1,460 @@
+{% style %}
+  .product {
+    padding: 6rem 0;
+  }
+
+  .product__grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 8rem;
+    margin-bottom: 8rem;
+  }
+
+  .product__media-wrapper {
+    position: sticky;
+    top: 12rem;
+  }
+
+  .product__media-main {
+    position: relative;
+    padding-bottom: 125%;
+    overflow: hidden;
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  }
+
+  .product__media-main img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product__media-thumbnails {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .product__media-thumbnail {
+    position: relative;
+    padding-bottom: 100%;
+    overflow: hidden;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+  }
+
+  .product__media-thumbnail:hover,
+  .product__media-thumbnail.active {
+    border-color: var(--color-maroon);
+  }
+
+  .product__media-thumbnail img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product__info {
+    padding-top: 2rem;
+  }
+
+  .product__vendor {
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    color: var(--color-rose);
+    margin-bottom: 1rem;
+  }
+
+  .product__title {
+    font-size: 4.5rem;
+    font-weight: 700;
+    color: var(--color-maroon);
+    margin: 0 0 2rem;
+    line-height: 1.2;
+  }
+
+  .product__price {
+    font-size: 3rem;
+    font-weight: 600;
+    color: var(--color-charcoal);
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .product__price--compare {
+    font-size: 2.4rem;
+    text-decoration: line-through;
+    color: #999;
+    font-weight: 400;
+  }
+
+  .product__price--sale {
+    color: var(--color-maroon);
+  }
+
+  .product__description {
+    font-size: 1.6rem;
+    line-height: 1.8;
+    color: var(--color-charcoal);
+    margin-bottom: 3rem;
+    opacity: 0.9;
+  }
+
+  .product__form {
+    margin-bottom: 3rem;
+  }
+
+  .product__options {
+    margin-bottom: 2.5rem;
+  }
+
+  .product__option {
+    margin-bottom: 2rem;
+  }
+
+  .product__option-label {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--color-charcoal);
+  }
+
+  .product__option-select {
+    width: 100%;
+    padding: 1.4rem 1.8rem;
+    font-size: 1.5rem;
+    border: 1.5px solid var(--color-rose);
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+  }
+
+  .product__quantity-wrapper {
+    margin-bottom: 2.5rem;
+  }
+
+  .product__quantity {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .product__quantity-button {
+    width: 45px;
+    height: 45px;
+    background: var(--color-rose);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .product__quantity-button:hover {
+    background: var(--color-maroon);
+  }
+
+  .product__quantity-input {
+    width: 70px;
+    height: 45px;
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 600;
+    border: 1.5px solid var(--color-rose);
+    border-radius: 4px;
+  }
+
+  .product__buttons {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .product__submit {
+    width: 100%;
+    padding: 2rem;
+    font-size: 1.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+  }
+
+  .product__submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* Gift Options */
+  .product__gift-options {
+    margin-top: 3rem;
+    padding: 2.5rem;
+    background: rgba(212, 165, 165, 0.08);
+    border-radius: 8px;
+    border: 1px solid rgba(212, 165, 165, 0.3);
+  }
+
+  .product__gift-options-title {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--color-maroon);
+    margin: 0 0 2rem;
+  }
+
+  .gift-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+  }
+
+  .gift-checkbox input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  .gift-checkbox label {
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  .gift-message-wrapper {
+    margin-top: 2rem;
+    display: none;
+  }
+
+  .gift-message-wrapper.active {
+    display: block;
+  }
+
+  .gift-message-textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 1.2rem;
+    border: 1.5px solid var(--color-rose);
+    border-radius: 4px;
+    font-family: var(--font-body);
+    font-size: 1.5rem;
+    resize: vertical;
+  }
+
+  @media (max-width: 1024px) {
+    .product__grid {
+      grid-template-columns: 1fr;
+      gap: 4rem;
+    }
+
+    .product__media-wrapper {
+      position: static;
+    }
+
+    .product__title {
+      font-size: 3.5rem;
+    }
+  }
+{% endstyle %}
+
+<div class="product">
+  <div class="page-width">
+    <div class="product__grid">
+      <!-- Product Images -->
+      <div class="product__media-wrapper">
+        <div class="product__media-main" id="product-main-image">
+          {%- if product.featured_media -%}
+            {{ product.featured_media | image_url: width: 1200 | image_tag:
+              loading: 'eager',
+              widths: '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646',
+              alt: product.title
+            }}
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag }}
+          {%- endif -%}
+        </div>
+        
+        {%- if product.media.size > 1 -%}
+          <div class="product__media-thumbnails">
+            {%- for media in product.media limit: 4 -%}
+              <div class="product__media-thumbnail {% if forloop.first %}active{% endif %}" data-media-id="{{ media.id }}">
+                {{ media | image_url: width: 200 | image_tag: alt: media.alt }}
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <!-- Product Info -->
+      <div class="product__info">
+        {%- if product.vendor != blank -%}
+          <p class="product__vendor">{{ product.vendor }}</p>
+        {%- endif -%}
+
+        <h1 class="product__title">{{ product.title }}</h1>
+
+        <div class="product__price" id="product-price">
+          {%- if product.compare_at_price > product.price -%}
+            <span class="product__price--compare">
+              {{ product.compare_at_price | money }}
+            </span>
+            <span class="product__price--sale">
+              {{ product.price | money }}
+            </span>
+          {%- else -%}
+            <span>{{ product.price | money }}</span>
+          {%- endif -%}
+        </div>
+
+        {%- if product.description != blank -%}
+          <div class="product__description">
+            {{ product.description }}
+          </div>
+        {%- endif -%}
+
+        {% form 'product', product, id: 'product-form', class: 'product__form' %}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+          {%- unless product.has_only_default_variant -%}
+            <div class="product__options">
+              {%- for option in product.options_with_values -%}
+                <div class="product__option">
+                  <label class="product__option-label" for="Option-{{ option.position }}">
+                    {{ option.name }}
+                  </label>
+                  <select
+                    id="Option-{{ option.position }}"
+                    name="options[{{ option.name | escape }}]"
+                    class="product__option-select"
+                  >
+                    {%- for value in option.values -%}
+                      <option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>
+                        {{ value }}
+                      </option>
+                    {%- endfor -%}
+                  </select>
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- endunless -%}
+
+          <div class="product__quantity-wrapper">
+            <label class="product__option-label">Quantity</label>
+            <div class="product__quantity">
+              <button type="button" class="product__quantity-button" id="quantity-decrease">−</button>
+              <input
+                type="number"
+                id="Quantity"
+                name="quantity"
+                value="1"
+                min="1"
+                class="product__quantity-input"
+              >
+              <button type="button" class="product__quantity-button" id="quantity-increase">+</button>
+            </div>
+          </div>
+
+          <div class="product__buttons">
+            <button
+              type="submit"
+              name="add"
+              class="product__submit btn btn-primary"
+              {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+            >
+              {%- if product.selected_or_first_available_variant.available -%}
+                Add to Cart
+              {%- else -%}
+                Sold Out
+              {%- endif -%}
+            </button>
+            
+            {%- if settings.enable_quick_buy -%}
+              <button type="button" class="btn btn-gold" id="buy-now">
+                Buy Now
+              </button>
+            {%- endif -%}
+          </div>
+        {% endform %}
+
+        {%- if settings.enable_gift_wrap or settings.enable_gift_message -%}
+          <div class="product__gift-options">
+            <h3 class="product__gift-options-title">🎁 Gift Options</h3>
+            
+            {%- if settings.enable_gift_wrap -%}
+              <div class="gift-checkbox">
+                <input type="checkbox" id="gift-wrap" name="properties[Gift Wrap]" value="Yes">
+                <label for="gift-wrap">Add gift wrapping (+${{ settings.gift_wrap_price }})</label>
+              </div>
+            {%- endif -%}
+            
+            {%- if settings.enable_gift_message -%}
+              <div class="gift-checkbox">
+                <input type="checkbox" id="is-gift" name="properties[Is this a gift?]" value="Yes">
+                <label for="is-gift">This is a gift</label>
+              </div>
+              
+              <div class="gift-message-wrapper" id="gift-message-wrapper">
+                <label class="product__option-label">Gift Message</label>
+                <textarea 
+                  class="gift-message-textarea" 
+                  name="properties[Gift Message]"
+                  placeholder="Add your personal message here..."
+                  maxlength="250"
+                ></textarea>
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if settings.enable_product_recommendations -%}
+      <div id="product-recommendations" data-product-id="{{ product.id }}"></div>
+    {%- endif -%}
+  </div>
+</div>
+
+<script>
+  // Gift message toggle
+  document.getElementById('is-gift')?.addEventListener('change', function() {
+    document.getElementById('gift-message-wrapper').classList.toggle('active', this.checked);
+  });
+
+  // Quantity controls
+  document.getElementById('quantity-decrease')?.addEventListener('click', function() {
+    const input = document.getElementById('Quantity');
+    const value = parseInt(input.value);
+    if (value > 1) input.value = value - 1;
+  });
+
+  document.getElementById('quantity-increase')?.addEventListener('click', function() {
+    const input = document.getElementById('Quantity');
+    input.value = parseInt(input.value) + 1;
+  });
+
+  // Image thumbnails
+  document.querySelectorAll('.product__media-thumbnail').forEach(thumb => {
+    thumb.addEventListener('click', function() {
+      document.querySelectorAll('.product__media-thumbnail').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      const img = this.querySelector('img').cloneNode(true);
+      document.querySelector('#product-main-image').innerHTML = '';
+      document.querySelector('#product-main-image').appendChild(img);
+    });
+  });
+</script>

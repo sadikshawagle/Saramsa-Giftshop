@@ -1,0 +1,188 @@
+{% style %}
+  .featured-collection {
+    padding: 8rem 0;
+  }
+
+  .featured-collection__header {
+    text-align: center;
+    margin-bottom: 6rem;
+  }
+
+  .featured-collection__eyebrow {
+    font-size: 1.4rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    color: var(--color-rose);
+    margin-bottom: 1rem;
+  }
+
+  .featured-collection__title {
+    font-size: 5rem;
+    font-weight: 700;
+    color: var(--color-maroon);
+    margin: 0 0 1.5rem;
+  }
+
+  .featured-collection__description {
+    font-size: 1.8rem;
+    color: var(--color-charcoal);
+    max-width: 700px;
+    margin: 0 auto;
+    opacity: 0.8;
+  }
+
+  .featured-collection__view-all {
+    text-align: center;
+    margin-top: 5rem;
+  }
+
+  @media (max-width: 768px) {
+    .featured-collection {
+      padding: 5rem 0;
+    }
+
+    .featured-collection__title {
+      font-size: 3.5rem;
+    }
+  }
+{% endstyle %}
+
+<div class="featured-collection">
+  <div class="page-width">
+    <div class="featured-collection__header">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="featured-collection__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      
+      {%- if section.settings.title != blank -%}
+        <h2 class="featured-collection__title">{{ section.settings.title }}</h2>
+      {%- endif -%}
+      
+      {%- if section.settings.description != blank -%}
+        <p class="featured-collection__description">{{ section.settings.description }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- liquid
+      assign products_to_display = section.settings.products_to_show
+
+      if section.settings.collection != blank
+        assign collection = collections[section.settings.collection]
+      else
+        assign collection = collections.all
+      endif
+    -%}
+
+    <div class="grid grid--4">
+      {%- for product in collection.products limit: products_to_display -%}
+        <div class="product-card fade-in-up" style="animation-delay: {{ forloop.index0 | times: 0.1 }}s">
+          <a href="{{ product.url }}" class="product-card__link">
+            <div class="product-card__image-wrapper">
+              {%- if product.featured_image -%}
+                {{ product.featured_image | image_url: width: 600 | image_tag: 
+                  class: 'product-card__image',
+                  loading: 'lazy',
+                  widths: '165, 360, 535, 750',
+                  alt: product.title
+                }}
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'product-card__image' }}
+              {%- endif -%}
+              
+              {%- if product.compare_at_price > product.price -%}
+                <span class="product-card__badge">Sale</span>
+              {%- endif -%}
+              
+              {%- if settings.enable_quick_view -%}
+                <button class="product-card__quick-view" data-product-url="{{ product.url }}?view=quick">
+                  Quick View
+                </button>
+              {%- endif -%}
+            </div>
+            
+            <h3 class="product-card__title">{{ product.title }}</h3>
+            
+            <div class="product-card__price">
+              {%- if product.compare_at_price > product.price -%}
+                <span class="product-card__price--compare">
+                  {{ product.compare_at_price | money }}
+                </span>
+              {%- endif -%}
+              <span>{{ product.price | money }}</span>
+            </div>
+          </a>
+        </div>
+      {%- else -%}
+        {%- for i in (1..products_to_display) -%}
+          <div class="product-card">
+            <div class="product-card__image-wrapper">
+              {{ 'product-1' | placeholder_svg_tag: 'product-card__image' }}
+            </div>
+            <h3 class="product-card__title">Sample Product</h3>
+            <div class="product-card__price">$29.99</div>
+          </div>
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.button_label != blank -%}
+      <div class="featured-collection__view-all">
+        <a href="{{ collection.url | default: '/collections/all' }}" class="btn btn-primary">
+          {{ section.settings.button_label }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Featured collection",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Bestsellers"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Shop Our Favorites"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 8,
+      "label": "Products to show"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "View All"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured collection"
+    }
+  ]
+}
+{% endschema %}

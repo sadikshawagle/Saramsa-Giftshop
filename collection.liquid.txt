@@ -1,0 +1,253 @@
+{% paginate collection.products by 12 %}
+
+{% style %}
+  .collection {
+    padding: 6rem 0;
+  }
+
+  .collection__header {
+    text-align: center;
+    margin-bottom: 6rem;
+  }
+
+  .collection__title {
+    font-size: 5.5rem;
+    font-weight: 700;
+    color: var(--color-maroon);
+    margin: 0 0 1.5rem;
+  }
+
+  .collection__description {
+    font-size: 1.8rem;
+    max-width: 700px;
+    margin: 0 auto;
+    color: var(--color-charcoal);
+    opacity: 0.9;
+  }
+
+  .collection__toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4rem;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .collection__count {
+    font-size: 1.5rem;
+    color: var(--color-charcoal);
+    opacity: 0.7;
+  }
+
+  .collection__sort {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .collection__sort-label {
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+
+  .collection__sort-select {
+    padding: 1rem 3rem 1rem 1.5rem;
+    font-size: 1.5rem;
+    border: 1.5px solid var(--color-rose);
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+  }
+
+  .collection__products {
+    margin-bottom: 6rem;
+  }
+
+  /* Pagination */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .pagination__item {
+    min-width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1.5rem;
+    border: 1.5px solid var(--color-rose);
+    background: white;
+    color: var(--color-charcoal);
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .pagination__item:hover {
+    background: var(--color-rose);
+    color: white;
+    border-color: var(--color-rose);
+  }
+
+  .pagination__item--active {
+    background: var(--color-maroon);
+    color: white;
+    border-color: var(--color-maroon);
+  }
+
+  .pagination__item--disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  @media (max-width: 768px) {
+    .collection__title {
+      font-size: 4rem;
+    }
+
+    .collection__toolbar {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .collection__sort {
+      width: 100%;
+    }
+
+    .collection__sort-select {
+      flex: 1;
+    }
+  }
+{% endstyle %}
+
+<div class="collection">
+  <div class="page-width">
+    <div class="collection__header">
+      <h1 class="collection__title">{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}
+        <div class="collection__description">
+          {{ collection.description }}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="collection__toolbar">
+      <p class="collection__count">
+        {{ paginate.items }} {{ paginate.items | pluralize: 'product', 'products' }}
+      </p>
+
+      <div class="collection__sort">
+        <label for="sort-by" class="collection__sort-label">Sort by:</label>
+        <select id="sort-by" class="collection__sort-select" onchange="window.location.href=this.value">
+          <option value="{{ collection.url }}?sort_by=manual" {% if collection.sort_by == 'manual' %}selected{% endif %}>Featured</option>
+          <option value="{{ collection.url }}?sort_by=best-selling" {% if collection.sort_by == 'best-selling' %}selected{% endif %}>Best Selling</option>
+          <option value="{{ collection.url }}?sort_by=title-ascending" {% if collection.sort_by == 'title-ascending' %}selected{% endif %}>A-Z</option>
+          <option value="{{ collection.url }}?sort_by=title-descending" {% if collection.sort_by == 'title-descending' %}selected{% endif %}>Z-A</option>
+          <option value="{{ collection.url }}?sort_by=price-ascending" {% if collection.sort_by == 'price-ascending' %}selected{% endif %}>Price: Low to High</option>
+          <option value="{{ collection.url }}?sort_by=price-descending" {% if collection.sort_by == 'price-descending' %}selected{% endif %}>Price: High to Low</option>
+          <option value="{{ collection.url }}?sort_by=created-descending" {% if collection.sort_by == 'created-descending' %}selected{% endif %}>Newest</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="collection__products">
+      <div class="grid grid--4">
+        {%- for product in collection.products -%}
+          <div class="product-card fade-in-up" style="animation-delay: {{ forloop.index0 | times: 0.05 }}s">
+            <a href="{{ product.url }}">
+              <div class="product-card__image-wrapper">
+                {%- if product.featured_image -%}
+                  {{ product.featured_image | image_url: width: 600 | image_tag: 
+                    class: 'product-card__image',
+                    loading: 'lazy',
+                    widths: '165, 360, 535, 750',
+                    alt: product.title
+                  }}
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'product-card__image' }}
+                {%- endif -%}
+                
+                {%- if product.compare_at_price > product.price -%}
+                  <span class="product-card__badge">Sale</span>
+                {%- endif -%}
+                
+                {%- if settings.enable_quick_view -%}
+                  <button class="product-card__quick-view" data-product-url="{{ product.url }}?view=quick">
+                    Quick View
+                  </button>
+                {%- endif -%}
+              </div>
+              
+              <h3 class="product-card__title">{{ product.title }}</h3>
+              
+              <div class="product-card__price">
+                {%- if product.compare_at_price > product.price -%}
+                  <span class="product-card__price--compare">
+                    {{ product.compare_at_price | money }}
+                  </span>
+                {%- endif -%}
+                <span>{{ product.price | money }}</span>
+              </div>
+            </a>
+          </div>
+        {%- else -%}
+          <div style="grid-column: 1 / -1; text-align: center; padding: 6rem 0;">
+            <p style="font-size: 2rem; color: #999;">No products found</p>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- if paginate.pages > 1 -%}
+      <div class="pagination">
+        {%- if paginate.previous -%}
+          <a href="{{ paginate.previous.url }}" class="pagination__item">
+            ← Previous
+          </a>
+        {%- else -%}
+          <span class="pagination__item pagination__item--disabled">
+            ← Previous
+          </span>
+        {%- endif -%}
+
+        {%- for part in paginate.parts -%}
+          {%- if part.is_link -%}
+            <a href="{{ part.url }}" class="pagination__item">
+              {{ part.title }}
+            </a>
+          {%- else -%}
+            {%- if part.title == paginate.current_page -%}
+              <span class="pagination__item pagination__item--active">
+                {{ part.title }}
+              </span>
+            {%- else -%}
+              <span class="pagination__item pagination__item--disabled">
+                {{ part.title }}
+              </span>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if paginate.next -%}
+          <a href="{{ paginate.next.url }}" class="pagination__item">
+            Next →
+          </a>
+        {%- else -%}
+          <span class="pagination__item pagination__item--disabled">
+            Next →
+          </span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% endpaginate %}
